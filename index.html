@@ -1,101 +1,228 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Watch & Earn</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: var(--tg-theme-bg-color, #121212);
-            color: var(--tg-theme-text-color, #ffffff);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 90vh;
-            margin: 0;
-            user-select: none;
-        }
-        .user-box {
-            font-size: 18px;
-            margin-bottom: 15px;
-        }
-        .card {
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 24px 40px;
-            text-align: center;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-        .balance {
-            font-size: 34px;
-            font-weight: bold;
-            color: #f1c40f;
-            margin-top: 8px;
-        }
-        .btn {
-            background: #2481cc;
-            color: white;
-            border: none;
-            padding: 14px 28px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 12px;
-            cursor: pointer;
-            width: 80%;
-            max-width: 280px;
-            transition: transform 0.1s;
-        }
-        .btn:active {
-            transform: scale(0.96);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Ice Ads - Watch & Earn</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
+  <style>
+    :root {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --primary: #38bdf8;
+      --primary-hover: #0284c7;
+      --text-main: #f8fafc;
+      --text-sub: #94a3b8;
+      --accent: #10b981;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      user-select: none;
+    }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 16px;
+      min-height: 100vh;
+    }
+    .user-badge {
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 14px;
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 24px;
+      padding: 24px 20px;
+      width: 100%;
+      max-width: 360px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      margin-bottom: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .balance-title {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-sub);
+      margin-bottom: 8px;
+    }
+    .points {
+      font-size: 42px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+    .ton-est {
+      font-size: 14px;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: opacity 0.2s;
+    }
+    .btn:active {
+      opacity: 0.8;
+      transform: scale(0.98);
+    }
+    .btn-ad {
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+    }
+    .withdraw-box {
+      width: 100%;
+      max-width: 360px;
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .withdraw-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid #334155;
+      background-color: #0f172a;
+      color: #fff;
+      font-size: 14px;
+      margin-bottom: 12px;
+      outline: none;
+    }
+    .input-group input:focus {
+      border-color: var(--primary);
+    }
+    .btn-withdraw {
+      background: #10b981;
+      color: #fff;
+    }
+    .note {
+      font-size: 12px;
+      color: var(--text-sub);
+      margin-top: 10px;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-    <div class="user-box">မင်္ဂလာပါ <span id="username">User</span> 👋</div>
-    <div class="card">
-        <div>Your Balance</div>
-        <div class="balance"><span id="points">0</span> Points</div>
+
+  <div class="user-badge" id="username">👋 Loading...</div>
+
+  <div class="card">
+    <div class="balance-title">Your Balance</div>
+    <div class="points" id="points">0</div>
+    <div class="ton-est" id="tonEst">≈ 0.000 TON</div>
+
+    <button class="btn btn-ad" onclick="watchAd()">
+      🎬 Watch Ad (+10 Points)
+    </button>
+  </div>
+
+  <div class="withdraw-box">
+    <div class="withdraw-title">
+      <span>Withdraw to TON</span>
+      <span style="font-size: 12px; color: var(--text-sub);">Min: 100 Points</span>
     </div>
+    <div class="input-group">
+      <input type="text" id="walletAddress" placeholder="Paste TON Wallet Address (EQ...)">
+    </div>
+    <button class="btn btn-withdraw" onclick="requestWithdraw()">
+      💎 Request Payout
+    </button>
+    <div class="note">100 Points = 0.01 TON (Processed via Admin)</div>
+  </div>
 
-    <button class="btn" onclick="watchAd()">📺 Watch Ad (+10 Points)</button>
+  <script>
+    const tg = window.Telegram?.WebApp;
+    if (tg) {
+      tg.ready();
+      tg.expand();
+    }
 
-    <script>
-        const tg = window.Telegram.WebApp;
-        tg.expand();
+    // Load User
+    const user = tg?.initDataUnsafe?.user;
+    if (user) {
+      document.getElementById("username").innerText = "👤 " + (user.first_name || "User");
+    } else {
+      document.getElementById("username").innerText = "👤 IceAds Player";
+    }
 
-        let points = 0;
-        const user = tg.initDataUnsafe?.user;
-        if (user) {
-            document.getElementById("username").innerText = user.first_name || "User";
-        }
+    // Points Storage
+    let points = parseInt(localStorage.getItem("ice_points") || "0");
+    updateUI();
 
-        // AdsGram Block ID ရလာပါက ဤနေရာတွင် အစားထိုးပါမည်
+    function updateUI() {
+      document.getElementById("points").innerText = points;
+      const ton = (points * 0.0001).toFixed(4);
+      document.getElementById("tonEst").innerText = `≈ ${ton} TON`;
+      localStorage.setItem("ice_points", points);
+    }
 
-    const AdController = window.Adsgram?.init({ blockId: 57757 });
+    // AdsGram Setup
+    const AdController = window.Adsgram ? window.Adsgram.init({ blockId: 57757 }) : null;
 
+    function watchAd() {
+      if (AdController) {
+        AdController.show().then((result) => {
+          points += 10;
+          updateUI();
+          tg?.HapticFeedback?.notificationOccurred('success');
+          alert("🎉 ကြော်ငြာကြည့်ရှုမှု အောင်မြင်ပါသည်။ +10 Points ရရှိပါပြီ!");
+        }).catch((err) => {
+          alert("⚠️ Ad Error: ကြော်ငြာမတက်သေးပါ။ AdsGram စနစ်တွင် Active ဖြစ်ရန် ခေတ္တစောင့်ပြီး ပြန်စမ်းပေးပါ။ (" + (err?.description || "No Ad Available") + ")");
+        });
+      } else {
+        alert("AdsGram SDK load မဖြစ်သေးပါ။ ခေတ္တစောင့်ပြီး ပြန်ဖွင့်ပေးပါ။");
+      }
+    }
 
-        function watchAd() {
-            if (window.Adsgram) {
-                AdController.show().then((result) => {
-                    points += 10;
-                    document.getElementById("points").innerText = points;
-                    tg.HapticFeedback.notificationOccurred('success');
-                }).catch((err) => {
-                    // စမ်းသပ်ချိန် Ad ID မထည့်ရသေးပါက သတိပေးရန်
-                    points += 10;
-                    document.getElementById("points").innerText = points;
-                    alert("Test Mode: +10 Points ရရှိပါသည် (Ad ID ချိတ်ဆက်ရန် ကျန်သေးသည်)");
-                });
-            } else {
-                points += 10;
-                document.getElementById("points").innerText = points;
-            }
-        }
-    </script>
+    function requestWithdraw() {
+      const address = document.getElementById("walletAddress").value.trim();
+      if (points < 100) {
+        alert("လက်ကျန် Points မလုံလောက်သေးပါ။ အနည်းဆုံး 100 Points ရှိမှ ငွေထုတ်ယူနိုင်ပါမည်။");
+        return;
+      }
+      if (!address || address.length < 15) {
+        alert("ကျေးဇူးပြု၍ မှန်ကန်သော TON Wallet Address ကို ထည့်သွင်းပေးပါ။");
+        return;
+      }
+
+      alert("✅ ငွေထုတ်ယူခွင့် တောင်းဆိုမှု လက်ခံရရှိပါသည်။ ကျေးဇူးပြု၍ Admin ဘက်မှ အတည်ပြုပေးသည်အထိ စောင့်ဆိုင်းပေးပါ။ (Address: " + address.substring(0, 8) + "...)");
+      points -= 100;
+      updateUI();
+      document.getElementById("walletAddress").value = "";
+    }
+  </script>
 </body>
 </html>
