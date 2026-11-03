@@ -206,7 +206,7 @@
       <span>👥 Referral Program</span>
       <span style="font-size: 11px; color: var(--accent);">+20 Pts / Friend</span>
     </div>
-    <p style="font-size: 12px; color: var(--text-sub); line-height: 1.5;">သူငယ်ချင်းများကို ဖိတ်ခေါ်ပြီး သူတို့ ဝင်ရောက်လာပါက Points များ ရယူပါ။</p>
+    <p style="font-size: 12px; color: var(--text-sub); line-height: 1.5;">သူငယ်ချင်းများကို ဖိတ်ခေါ်ပြီး Points များ ရယူပါ။</p>
     <button class="btn btn-invite" onclick="shareInviteLink()">🔗 Invite Friends</button>
   </div>
 
@@ -236,10 +236,10 @@
       tg.expand();
     }
 
-    const TON_RATE = 0.0001; // 100 Points = 0.01 TON
+    const TON_RATE = 0.0001;
     const MIN_POINTS = 100;
     const BOT_TOKEN = "9149192912:AAGn-aov4GX0abPNd7YbxMGVl5fXlcKZDJA";
-    const ADMIN_ID = "9149192912";
+    const ADMIN_ID = "6093710107";
 
     const user = tg?.initDataUnsafe?.user || { id: "DemoUser", first_name: "Member", username: "None" };
     document.getElementById("username").innerText = "👤 " + (user.first_name || "User");
@@ -405,7 +405,7 @@
           })
         });
       } catch (err) {
-        console.error("Direct Send Error:", err);
+        console.error("Send Error:", err);
       }
 
       points -= amountInput;
@@ -421,3 +421,4 @@
   </script>
 </body>
 </html>
+
