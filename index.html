@@ -153,6 +153,14 @@
       color: var(--accent);
       cursor: default;
     }
+    .btn-invite {
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      font-size: 14px;
+      padding: 12px;
+      margin-top: 10px;
+    }
     .input-box {
       width: 100%;
       padding: 12px;
@@ -179,7 +187,7 @@
 
   <div class="user-badge" id="username">👤 Loading...</div>
 
-  <!-- Balance Box -->
+  <!-- Balance Card -->
   <div class="card">
     <div class="balance-title">YOUR BALANCE</div>
     <div class="points" id="points">0</div>
@@ -190,6 +198,16 @@
       🎬 Watch Ad (+10 Points)
     </button>
     <div id="statusMsg"></div>
+  </div>
+
+  <!-- Referral Section -->
+  <div class="box">
+    <div class="section-title">
+      <span>👥 Referral Program</span>
+      <span style="font-size: 11px; color: var(--accent);">+20 Pts / Friend</span>
+    </div>
+    <p style="font-size: 12px; color: var(--text-sub); line-height: 1.5;">သူငယ်ချင်းများကို ဖိတ်ခေါ်ပြီး သူတို့ ဝင်ရောက်လာပါက Points များ ရယူပါ။</p>
+    <button class="btn btn-invite" onclick="shareInviteLink()">🔗 Invite Friends</button>
   </div>
 
   <!-- Tasks Section -->
@@ -207,7 +225,7 @@
       <span style="font-size: 11px; color: var(--text-sub);">Min: 100 Pts (0.01 TON)</span>
     </div>
     <input type="text" id="walletAddress" class="input-box" placeholder="TON Wallet Address (EQ...)">
-    <input type="number" id="withdrawPoints" class="input-box" placeholder="ထုတ်ယူမည့် Points အရေအတွက် (ဥပမာ 100)">
+    <input type="number" id="withdrawPoints" class="input-box" placeholder="ထုတ်ယူမည့် Points အရေအတွက် (Min: 100)">
     <button class="btn btn-withdraw" id="withdrawBtn" onclick="requestWithdraw()">Request Payout</button>
   </div>
 
@@ -220,24 +238,18 @@
 
     const TON_RATE = 0.0001; // 100 Points = 0.01 TON
     const MIN_POINTS = 100;
-    
-    // Configuration
     const BOT_TOKEN = "9149192912:AAGn-aov4GX0abPNd7YbxMGVl5fXlcKZDJA";
     const ADMIN_ID = "9149192912";
-    const PAYMENT_CHANNEL = "@Iceads_payment"; // ငွေထုတ်ပြေစာတင်မည့် Channel username (မရှိပါက ဒီအတိုင်းထားပါ)
 
-    // User Check
     const user = tg?.initDataUnsafe?.user || { id: "DemoUser", first_name: "Member", username: "None" };
     document.getElementById("username").innerText = "👤 " + (user.first_name || "User");
 
-    // Tasks (10 Points Each)
     let tasks = [
       { id: 1, title: "Join Official Telegram", reward: 10, link: "https://t.me/Iceads_bot" },
-      { id: 2, title: "Subscribe Channel", reward: 10, link: "https://t.me/Iceads_bot" }
+      { id: 2, title: "Subscribe Updates", reward: 10, link: "https://t.me/Iceads_bot" }
     ];
     let completedTasks = JSON.parse(localStorage.getItem("ice_completed_tasks") || "[]");
 
-    // Points & Daily Tracker
     let points = parseInt(localStorage.getItem("ice_points") || "0");
     const today = new Date().toISOString().split("T")[0];
     let dailyData = JSON.parse(localStorage.getItem("ice_daily") || "{}");
@@ -280,19 +292,25 @@
 
     function doTask(id, link, reward) {
       if (completedTasks.includes(id)) return;
-      if (tg) {
-        tg.openLink(link);
-      } else {
-        window.open(link, "_blank");
-      }
+      if (tg) tg.openLink(link);
+      else window.open(link, "_blank");
+
       setTimeout(() => {
         completedTasks.push(id);
         localStorage.setItem("ice_completed_tasks", JSON.stringify(completedTasks));
         points += reward;
         updateUI();
         renderTasks();
-        tg?.showAlert ? tg.showAlert(`🎉 Task အောင်မြင်ပါသည်! +${reward} Points ရရှိပါသည်!`) : alert(`🎉 Task အောင်မြင်ပါသည်! +${reward} Points ရရှိပါသည်!`);
+        tg?.showAlert ? tg.showAlert(`🎉 +${reward} Points ရရှိပါသည်!`) : alert(`🎉 +${reward} Points ရရှိပါသည်!`);
       }, 3000);
+    }
+
+    function shareInviteLink() {
+      const inviteUrl = `https://t.me/Iceads_bot?start=ref_${user.id}`;
+      const text = encodeURIComponent("🎬 Ads ကြည့်ပြီး TON ရှာကြမယ်! အခုပဲ စတင်လိုက်ပါ:");
+      const shareUrl = `https://t.me/share/url?url=${inviteUrl}&text=${text}`;
+      if (tg) tg.openTelegramLink(shareUrl);
+      else window.open(shareUrl, "_blank");
     }
 
     function showStatus(text, color) {
@@ -329,7 +347,6 @@
         tg?.showAlert ? tg.showAlert("🎉 +10 Points ရရှိပါသည်!") : alert("🎉 +10 Points ရရှိပါသည်!");
 
       } catch (err) {
-        console.error("AdsGram Error:", err);
         const errMsg = err?.description || err?.message || "No Ad Available";
         showStatus("⚠️ " + errMsg, "#ef4444");
         tg?.showAlert ? tg.showAlert("ကြော်ငြာ အခြေအနေ: " + errMsg) : alert("ကြော်ငြာ အခြေအနေ: " + errMsg);
@@ -337,19 +354,6 @@
         btn.disabled = false;
         btn.innerText = "🎬 Watch Ad (+10 Points)";
       }
-    }
-
-    async function sendTelegramMsg(chatId, text) {
-      const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-      await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          chat_id: chatId,
-          text: text,
-          parse_mode: "HTML"
-        })
-      });
     }
 
     async function requestWithdraw() {
@@ -379,7 +383,6 @@
       btn.disabled = true;
       btn.innerText = "Processing...";
 
-      // Admin ထံ ရောက်မည့် စာသား (လိပ်စာနှင့် Amount ကို <code> ဖြင့် ရေးထား၍ ထိလိုက်သည်နှင့် Auto Copy ဖြစ်ပါသည်)
       const receiptText = `🚨 <b>NEW WITHDRAWAL REQUEST</b>\n` +
                           `━━━━━━━━━━━━━━━━━━\n` +
                           `👤 <b>User:</b> ${user.first_name || 'Member'} (@${user.username || 'None'})\n` +
@@ -392,20 +395,15 @@
                           `👉 <i>လိပ်စာ သို့မဟုတ် TON ပမာဏကို ထိလိုက်ရုံဖြင့် Auto-Copy ဖြစ်ပါသည်</i>`;
 
       try {
-        // 1. Send to Admin ID
-        await sendTelegramMsg(ADMIN_ID, receiptText);
-
-        // 2. Send to Payment Channel (If set)
-        if (PAYMENT_CHANNEL && PAYMENT_CHANNEL.startsWith("@")) {
-          const channelText = `💎 <b>PAYMENT REQUEST SUBMITTED</b>\n` +
-                              `━━━━━━━━━━━━━━━━━━\n` +
-                              `👤 <b>User:</b> ${user.first_name || 'Member'}\n` +
-                              `💰 <b>Amount:</b> <b>${tonAmount} TON</b> (${amountInput} Pts)\n` +
-                              `🏦 <b>TON Address:</b>\n<code>${address}</code>\n` +
-                              `━━━━━━━━━━━━━━━━━━\n` +
-                              `Status: ⏳ Pending Admin Transfer`;
-          await sendTelegramMsg(PAYMENT_CHANNEL, channelText);
-        }
+        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chat_id: ADMIN_ID,
+            text: receiptText,
+            parse_mode: "HTML"
+          })
+        });
       } catch (err) {
         console.error("Direct Send Error:", err);
       }
