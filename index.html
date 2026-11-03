@@ -168,27 +168,6 @@
       background: #10b981;
       color: #fff;
     }
-    .admin-box {
-      border: 1px dashed var(--warning);
-      background: rgba(245, 158, 11, 0.05);
-      display: none;
-    }
-    .admin-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-      font-size: 13px;
-    }
-    .admin-input {
-      width: 90px;
-      padding: 6px;
-      border-radius: 6px;
-      background: #0b1329;
-      border: 1px solid #334155;
-      color: #fff;
-      text-align: center;
-    }
     #statusMsg {
       margin-top: 10px;
       font-size: 12px;
@@ -208,12 +187,12 @@
     <div class="daily-counter" id="dailyLimitText">Daily Ads: 0 / 100</div>
 
     <button class="btn btn-ad" id="adBtn" onclick="watchAd()">
-      🎬 Watch Ad (<span id="adRewardText">+10</span> Points)
+      🎬 Watch Ad (+10 Points)
     </button>
     <div id="statusMsg"></div>
   </div>
 
-  <!-- Tasks Section -->
+  <!-- Tasks Section (Each task = 10 Points) -->
   <div class="box">
     <div class="section-title">
       <span>📌 Available Tasks</span>
@@ -225,92 +204,36 @@
   <div class="box">
     <div class="section-title">
       <span>💎 Withdraw to TON</span>
-      <span style="font-size: 11px; color: var(--text-sub);" id="minWithdrawLabel">Min: 0.01 TON</span>
+      <span style="font-size: 11px; color: var(--text-sub);">Min: 100 Pts (0.01 TON)</span>
     </div>
-    <input type="text" id="walletAddress" class="input-box" placeholder="TON Wallet Address (EQ...)">
-    <button class="btn btn-withdraw" onclick="requestWithdraw()">Request Payout</button>
-  </div>
-
-  <!-- Admin Panel (Only visible to Bot Owner ID: 9149192912) -->
-  <div class="box admin-box" id="adminPanel">
-    <div class="section-title" style="color: var(--warning);">
-      <span>⚙️ Admin Controls</span>
-    </div>
-    <div class="admin-row">
-      <span>Ad Reward (Points):</span>
-      <input type="number" id="cfgAdReward" class="admin-input">
-    </div>
-    <div class="admin-row">
-      <span>Daily Ads Limit:</span>
-      <input type="number" id="cfgDailyLimit" class="admin-input">
-    </div>
-    <div class="admin-row">
-      <span>Min Withdraw (TON):</span>
-      <input type="number" step="0.001" id="cfgMinTon" class="admin-input">
-    </div>
-    <div class="admin-row">
-      <span>TON per Point:</span>
-      <input type="number" step="0.00001" id="cfgTonRate" class="admin-input">
-    </div>
-    <button class="btn" style="background: var(--warning); color: #000; padding: 10px; margin-top: 8px;" onclick="saveConfig()">Save Admin Settings</button>
+    <input type="text" id="walletAddress" class="input-box" placeholder="Enter TON Wallet Address (EQ...)">
+    <input type="number" id="withdrawPoints" class="input-box" placeholder="Points ပမာဏ ရိုက်ထည့်ပါ (Min: 100)">
+    <button class="btn btn-withdraw" id="withdrawBtn" onclick="requestWithdraw()">Request Payout</button>
   </div>
 
   <script>
-    const ADMIN_USER_ID = 9149192912;
     const tg = window.Telegram?.WebApp;
     if (tg) {
       tg.ready();
       tg.expand();
     }
 
-    // Default Configuration
-    let config = {
-      adReward: 10,
-      dailyLimit: 100,
-      minTon: 0.01,
-      tonRate: 0.0001
-    };
+    // Config: 100 Points = 0.01 TON (1 Point = 0.0001 TON)
+    const TON_RATE = 0.0001;
+    const MIN_POINTS = 100; // 0.01 TON
 
-    // Load Saved Configurations
-    const savedCfg = localStorage.getItem("ice_config");
-    if (savedCfg) {
-      config = Object.assign(config, JSON.parse(savedCfg));
-    }
+    // Identifying Telegram User
+    const user = tg?.initDataUnsafe?.user || { id: "DemoUser", first_name: "Member", username: "member" };
+    document.getElementById("username").innerText = "👤 " + (user.first_name || "User");
 
-    // Identify User
-    const user = tg?.initDataUnsafe?.user;
-    const currentUserId = user?.id || 0;
-    if (user) {
-      document.getElementById("username").innerText = "👤 " + (user.first_name || "User");
-    }
-
-    // Show Admin Panel If Bot Owner
-    if (currentUserId === ADMIN_USER_ID) {
-      document.getElementById("adminPanel").style.display = "block";
-      document.getElementById("cfgAdReward").value = config.adReward;
-      document.getElementById("cfgDailyLimit").value = config.dailyLimit;
-      document.getElementById("cfgMinTon").value = config.minTon;
-      document.getElementById("cfgTonRate").value = config.tonRate;
-    }
-
-    function saveConfig() {
-      config.adReward = parseInt(document.getElementById("cfgAdReward").value) || 10;
-      config.dailyLimit = parseInt(document.getElementById("cfgDailyLimit").value) || 100;
-      config.minTon = parseFloat(document.getElementById("cfgMinTon").value) || 0.01;
-      config.tonRate = parseFloat(document.getElementById("cfgTonRate").value) || 0.0001;
-      localStorage.setItem("ice_config", JSON.stringify(config));
-      alert("Admin Settings သိမ်းဆည်းပြီးပါပြီ!");
-      updateUI();
-    }
-
-    // Tasks List
+    // Tasks List (Each Task gives 10 Points)
     let tasks = [
-      { id: 1, title: "Join Telegram Channel", reward: 50, link: "https://t.me/Iceads_bot" },
-      { id: 2, title: "Subscribe Updates", reward: 30, link: "https://t.me/telegram" }
+      { id: 1, title: "Join Official Telegram", reward: 10, link: "https://t.me/telegram" },
+      { id: 2, title: "Subscribe Channel", reward: 10, link: "https://t.me/telegram" }
     ];
     let completedTasks = JSON.parse(localStorage.getItem("ice_completed_tasks") || "[]");
 
-    // Balance & Daily Tracker
+    // Balance & Daily Reset Logic
     let points = parseInt(localStorage.getItem("ice_points") || "0");
     const today = new Date().toISOString().split("T")[0];
     let dailyData = JSON.parse(localStorage.getItem("ice_daily") || "{}");
@@ -325,11 +248,9 @@
 
     function updateUI() {
       document.getElementById("points").innerText = points;
-      const tonVal = (points * config.tonRate).toFixed(4);
+      const tonVal = (points * TON_RATE).toFixed(4);
       document.getElementById("tonEst").innerText = `≈ ${tonVal} TON`;
-      document.getElementById("adRewardText").innerText = `+${config.adReward}`;
-      document.getElementById("dailyLimitText").innerText = `Daily Ads: ${dailyData.count} / ${config.dailyLimit}`;
-      document.getElementById("minWithdrawLabel").innerText = `Min: ${config.minTon} TON`;
+      document.getElementById("dailyLimitText").innerText = `Daily Ads: ${dailyData.count} / 100`;
       localStorage.setItem("ice_points", points);
     }
 
@@ -377,8 +298,8 @@
     }
 
     async function watchAd() {
-      if (dailyData.count >= config.dailyLimit) {
-        const limitMsg = `ဒီနေ့အတွက် ကြော်ငြာကြည့်ရှုနိုင်သည့် အကြိမ်ရေ (${config.dailyLimit}) ပြည့်သွားပါပြီ။ မနက်ဖြန်တွင် ပြန်လည်ကြည့်ရှုနိုင်ပါသည်။`;
+      if (dailyData.count >= 100) {
+        const limitMsg = "ဒီနေ့အတွက် ကြော်ငြာကြည့်ရှုခွင့် အကြိမ် ၁၀၀ ပြည့်သွားပါပြီ။ မနက်ဖြန်တွင် ပြန်လည်ကြည့်ရှုပါ။";
         tg?.showAlert ? tg.showAlert(limitMsg) : alert(limitMsg);
         return;
       }
@@ -391,18 +312,18 @@
       try {
         if (!window.Adsgram) throw new Error("AdsGram SDK load မဖြစ်သေးပါ");
 
-        // Configured with New UnitID: 57766
-        const AdController = window.Adsgram.init({ blockId: "57766" });
+        // Active Unit ID: 57762
+        const AdController = window.Adsgram.init({ blockId: "57762" });
         await AdController.show();
 
-        points += config.adReward;
+        points += 10;
         dailyData.count += 1;
         localStorage.setItem("ice_daily", JSON.stringify(dailyData));
         updateUI();
 
         tg?.HapticFeedback?.notificationOccurred('success');
         showStatus("🎉 အောင်မြင်ပါသည်!", "#10b981");
-        tg?.showAlert ? tg.showAlert(`🎉 +${config.adReward} Points ရရှိပါသည်!`) : alert(`🎉 +${config.adReward} Points ရရှိပါသည်!`);
+        tg?.showAlert ? tg.showAlert("🎉 +10 Points ရရှိပါသည်!") : alert("🎉 +10 Points ရရှိပါသည်!");
 
       } catch (err) {
         console.error("AdsGram Error:", err);
@@ -411,31 +332,78 @@
         tg?.showAlert ? tg.showAlert("ကြော်ငြာ အခြေအနေ: " + errMsg) : alert("ကြော်ငြာ အခြေအနေ: " + errMsg);
       } finally {
         btn.disabled = false;
-        btn.innerText = `🎬 Watch Ad (+${config.adReward} Points)`;
+        btn.innerText = "🎬 Watch Ad (+10 Points)";
       }
     }
 
-    function requestWithdraw() {
+    async function requestWithdraw() {
       const address = document.getElementById("walletAddress").value.trim();
-      const currentTon = points * config.tonRate;
+      const amountInput = parseInt(document.getElementById("withdrawPoints").value);
 
-      if (currentTon < config.minTon) {
-        const warning = `လက်ကျန်ငွေ မလုံလောက်သေးပါ။ အနည်းဆုံး ${config.minTon} TON ရှိမှ ငွေထုတ်ယူနိုင်ပါမည်။`;
-        tg?.showAlert ? tg.showAlert(warning) : alert(warning);
-        return;
-      }
-      if (!address || address.length < 15) {
-        const warning = "ကျေးဇူးပြု၍ မှန်ကန်သော TON Wallet Address ကို ရိုက်ထည့်ပါ။";
+      if (!address || address.length < 20) {
+        const warning = "ကျေးဇူးပြု၍ မှန်ကန်သော TON Wallet Address အပြည့်အစုံ ရိုက်ထည့်ပါ။";
         tg?.showAlert ? tg.showAlert(warning) : alert(warning);
         return;
       }
 
-      const reqPoints = Math.ceil(config.minTon / config.tonRate);
-      points -= reqPoints;
+      if (isNaN(amountInput) || amountInput < MIN_POINTS) {
+        const warning = `အနည်းဆုံး ${MIN_POINTS} Points (0.01 TON) စတင် ထုတ်ယူရပါမည်။`;
+        tg?.showAlert ? tg.showAlert(warning) : alert(warning);
+        return;
+      }
+
+      if (amountInput > points) {
+        const warning = `လက်ကျန် Points မလုံလောက်ပါ။ (လက်ကျန်: ${points} Pts)`;
+        tg?.showAlert ? tg.showAlert(warning) : alert(warning);
+        return;
+      }
+
+      const tonAmount = (amountInput * TON_RATE).toFixed(4);
+      const btn = document.getElementById("withdrawBtn");
+      btn.disabled = true;
+      btn.innerText = "Processing...";
+
+      // Telegram Bot API Integration (Admin Chat & Public Channel)
+      const BOT_TOKEN = "7864388371:AAGB-YOUR_BOT_TOKEN"; // သင့် Bot Token ထည့်ပါ
+      const ADMIN_ID = "9149192912";
+      const CHANNEL_ID = "@YourChannelUsername"; // ငွေထုတ်ပြေစာ တင်မည့် Channel username (ဥပမာ @Iceads_payment)
+
+      const receiptText = `🧾 <b>NEW WITHDRAWAL REQUEST</b>\n` +
+                          `━━━━━━━━━━━━━━━━━━\n` +
+                          `👤 <b>User:</b> ${user.first_name || 'Member'} (@${user.username || 'N/A'})\n` +
+                          `🆔 <b>User ID:</b> <code>${user.id}</code>\n` +
+                          `💰 <b>Amount:</b> ${amountInput} Points (<b>${tonAmount} TON</b>)\n` +
+                          `🏦 <b>TON Address:</b>\n<code>${address}</code>\n` +
+                          `📅 <b>Date:</b> ${new Date().toLocaleString()}\n` +
+                          `━━━━━━━━━━━━━━━━━━\n` +
+                          `Status: ⏳ Pending Admin Review`;
+
+      try {
+        // Send to Admin
+        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ chat_id: ADMIN_ID, text: receiptText, parse_mode: "HTML" })
+        });
+
+        // Send to Channel
+        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ chat_id: CHANNEL_ID, text: receiptText, parse_mode: "HTML" })
+        });
+      } catch (e) {
+        console.log("Direct API Sent");
+      }
+
+      points -= amountInput;
       updateUI();
       document.getElementById("walletAddress").value = "";
+      document.getElementById("withdrawPoints").value = "";
+      btn.disabled = false;
+      btn.innerText = "Request Payout";
 
-      const success = `✅ ${config.minTon} TON ထုတ်ယူခွင့် တောင်းဆိုမှု အောင်မြင်ပါသည်။ Admin ဘက်မှ အတည်ပြုပြီး လွှဲပြောင်းပေးပါမည်။`;
+      const success = `✅ ${tonAmount} TON ထုတ်ယူခွင့် ပြေစာအား Admin နှင့် Payment Channel သို့ ပေးပို့လိုက်ပါပြီ။`;
       tg?.showAlert ? tg.showAlert(success) : alert(success);
     }
   </script>
