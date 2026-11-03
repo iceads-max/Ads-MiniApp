@@ -187,7 +187,7 @@
       tg.expand();
     }
 
-    // User Display
+    // User Profile Display
     const user = tg?.initDataUnsafe?.user;
     if (user) {
       document.getElementById("username").innerText = "👤 " + (user.first_name || "User");
@@ -195,7 +195,7 @@
       document.getElementById("username").innerText = "👤 IceAds Player";
     }
 
-    // Points Local Storage
+    // Points Storage
     let points = parseInt(localStorage.getItem("ice_points") || "0");
     updateUI();
 
@@ -220,21 +220,20 @@
 
       try {
         if (!window.Adsgram) {
-          throw new Error("AdsGram SDK load မဖြစ်သေးပါ (Network စစ်ဆေးပါ)");
+          throw new Error("AdsGram SDK load မဖြစ်သေးပါ");
         }
 
-        // AdsGram Initializer with Unit ID 57757
-        const AdController = window.Adsgram.init({ blockId: "57757" });
+        // Newly Created Active Unit ID: 57762
+        const AdController = window.Adsgram.init({ blockId: "57762" });
         
-        const result = await AdController.show();
+        await AdController.show();
         
-        // ကြော်ငြာကြည့်ရှုမှု အောင်မြင်သည့်အခါ
+        // ကြော်ငြာ ကြည့်ရှုပြီးပါက Points ပေးခြင်း
         points += 10;
         updateUI();
-        if (tg?.HapticFeedback) {
-          tg.HapticFeedback.notificationOccurred('success');
-        }
+        tg?.HapticFeedback?.notificationOccurred('success');
         showStatus("🎉 အောင်မြင်ပါသည်! +10 Points ရရှိပါပြီ။", "#10b981");
+
         if (tg?.showAlert) {
           tg.showAlert("🎉 +10 Points ရရှိပါသည်!");
         } else {
@@ -243,13 +242,13 @@
 
       } catch (err) {
         console.error("AdsGram Error:", err);
-        const errMsg = err?.description || err?.message || JSON.stringify(err);
-        showStatus("⚠️ ကြော်ငြာမတက်ပါ: " + errMsg, "#ef4444");
+        const errMsg = err?.description || err?.message || "No Ad Available";
+        showStatus("⚠️ " + errMsg, "#ef4444");
         
         if (tg?.showAlert) {
-          tg.showAlert("ကြော်ငြာ မရရှိနိုင်သေးပါ: " + errMsg);
+          tg.showAlert("ကြော်ငြာ အခြေအနေ: " + errMsg);
         } else {
-          alert("ကြော်ငြာ မရရှိနိုင်သေးပါ: " + errMsg);
+          alert("ကြော်ငြာ အခြေအနေ: " + errMsg);
         }
       } finally {
         btn.disabled = false;
