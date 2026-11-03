@@ -11,11 +11,11 @@
       --bg-color: #0b1329;
       --card-bg: #152238;
       --primary: #38bdf8;
-      --primary-hover: #0284c7;
       --text-main: #f8fafc;
       --text-sub: #94a3b8;
       --accent: #10b981;
       --danger: #ef4444;
+      --warning: #f59e0b;
     }
     * {
       box-sizing: border-box;
@@ -30,180 +30,344 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 24px 16px;
+      padding: 20px 16px 40px;
       min-height: 100vh;
     }
     .user-badge {
       background: rgba(56, 189, 248, 0.12);
       border: 1px solid rgba(56, 189, 248, 0.25);
-      padding: 8px 18px;
+      padding: 6px 14px;
       border-radius: 20px;
-      font-size: 14px;
+      font-size: 13px;
       color: var(--primary);
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      margin-bottom: 16px;
     }
     .card {
       background-color: var(--card-bg);
-      border-radius: 24px;
-      padding: 24px 20px;
+      border-radius: 20px;
+      padding: 20px;
       width: 100%;
       max-width: 360px;
       text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
     }
     .balance-title {
-      font-size: 13px;
+      font-size: 12px;
       text-transform: uppercase;
-      letter-spacing: 1.2px;
+      letter-spacing: 1px;
       color: var(--text-sub);
-      margin-bottom: 8px;
-      font-weight: 600;
+      margin-bottom: 4px;
     }
     .points {
-      font-size: 44px;
+      font-size: 40px;
       font-weight: 800;
       color: var(--primary);
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
     .ton-est {
       font-size: 14px;
       color: var(--accent);
-      margin-bottom: 20px;
-      font-weight: 500;
+      margin-bottom: 14px;
+    }
+    .daily-counter {
+      font-size: 12px;
+      color: var(--warning);
+      margin-bottom: 14px;
+      font-weight: 600;
     }
     .btn {
       width: 100%;
-      padding: 15px;
+      padding: 14px;
       border: none;
-      border-radius: 14px;
-      font-size: 16px;
+      border-radius: 12px;
+      font-size: 15px;
       font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      transition: all 0.2s ease;
     }
     .btn:active {
-      transform: scale(0.97);
+      transform: scale(0.98);
     }
     .btn-ad {
       background: linear-gradient(135deg, #0284c7, #38bdf8);
       color: #fff;
-      box-shadow: 0 4px 18px rgba(56, 189, 248, 0.35);
     }
     .btn-ad:disabled {
-      opacity: 0.6;
+      opacity: 0.5;
       cursor: not-allowed;
     }
-    .withdraw-box {
-      width: 100%;
-      max-width: 360px;
-      background: var(--card-bg);
-      border-radius: 20px;
-      padding: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-    .withdraw-title {
+    .section-title {
       font-size: 15px;
-      font-weight: 600;
+      font-weight: 700;
       margin-bottom: 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .input-group input {
+    .box {
       width: 100%;
-      padding: 13px 14px;
+      max-width: 360px;
+      background: var(--card-bg);
+      border-radius: 18px;
+      padding: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 16px;
+    }
+    .task-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(11, 19, 41, 0.6);
+      padding: 12px;
       border-radius: 12px;
+      margin-bottom: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .task-info {
+      text-align: left;
+    }
+    .task-title {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .task-reward {
+      font-size: 12px;
+      color: var(--accent);
+    }
+    .btn-task {
+      padding: 8px 14px;
+      font-size: 13px;
+      background: #334155;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .btn-task.done {
+      background: rgba(16, 185, 129, 0.2);
+      color: var(--accent);
+      cursor: default;
+    }
+    .input-box {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
       border: 1px solid #334155;
       background-color: #0b1329;
       color: #fff;
-      font-size: 14px;
-      margin-bottom: 12px;
+      font-size: 13px;
+      margin-bottom: 10px;
       outline: none;
-    }
-    .input-group input:focus {
-      border-color: var(--primary);
     }
     .btn-withdraw {
       background: #10b981;
       color: #fff;
-      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25);
     }
-    .note {
-      font-size: 12px;
-      color: var(--text-sub);
-      margin-top: 10px;
+    .admin-box {
+      border: 1px dashed var(--warning);
+      background: rgba(245, 158, 11, 0.05);
+      display: none;
+    }
+    .admin-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+    .admin-input {
+      width: 90px;
+      padding: 6px;
+      border-radius: 6px;
+      background: #0b1329;
+      border: 1px solid #334155;
+      color: #fff;
       text-align: center;
     }
     #statusMsg {
-      margin-top: 15px;
-      font-size: 13px;
+      margin-top: 10px;
+      font-size: 12px;
       text-align: center;
-      min-height: 18px;
     }
   </style>
 </head>
 <body>
 
-  <div class="user-badge" id="username">👤 Loading User...</div>
+  <div class="user-badge" id="username">👤 Loading...</div>
 
+  <!-- Balance Card -->
   <div class="card">
     <div class="balance-title">YOUR BALANCE</div>
     <div class="points" id="points">0</div>
     <div class="ton-est" id="tonEst">≈ 0.0000 TON</div>
+    <div class="daily-counter" id="dailyLimitText">Daily Ads: 0 / 100</div>
 
     <button class="btn btn-ad" id="adBtn" onclick="watchAd()">
-      🎬 Watch Ad (+10 Points)
+      🎬 Watch Ad (<span id="adRewardText">+10</span> Points)
     </button>
     <div id="statusMsg"></div>
   </div>
 
-  <div class="withdraw-box">
-    <div class="withdraw-title">
-      <span>Withdraw to TON</span>
-      <span style="font-size: 12px; color: var(--text-sub);">Min: 100 Points</span>
+  <!-- Tasks Section -->
+  <div class="box">
+    <div class="section-title">
+      <span>📌 Available Tasks</span>
     </div>
-    <div class="input-group">
-      <input type="text" id="walletAddress" placeholder="Enter TON Wallet Address (EQ...)">
+    <div id="taskList"></div>
+  </div>
+
+  <!-- Withdrawal Section -->
+  <div class="box">
+    <div class="section-title">
+      <span>💎 Withdraw to TON</span>
+      <span style="font-size: 11px; color: var(--text-sub);" id="minWithdrawLabel">Min: 0.01 TON</span>
     </div>
-    <button class="btn btn-withdraw" onclick="requestWithdraw()">
-      💎 Request Payout
-    </button>
-    <div class="note">100 Points = 0.01 TON (Processed via Admin)</div>
+    <input type="text" id="walletAddress" class="input-box" placeholder="TON Wallet Address (EQ...)">
+    <button class="btn btn-withdraw" onclick="requestWithdraw()">Request Payout</button>
+  </div>
+
+  <!-- Admin Panel (Only visible to Bot Owner ID: 9149192912) -->
+  <div class="box admin-box" id="adminPanel">
+    <div class="section-title" style="color: var(--warning);">
+      <span>⚙️ Admin Controls</span>
+    </div>
+    <div class="admin-row">
+      <span>Ad Reward (Points):</span>
+      <input type="number" id="cfgAdReward" class="admin-input">
+    </div>
+    <div class="admin-row">
+      <span>Daily Ads Limit:</span>
+      <input type="number" id="cfgDailyLimit" class="admin-input">
+    </div>
+    <div class="admin-row">
+      <span>Min Withdraw (TON):</span>
+      <input type="number" step="0.001" id="cfgMinTon" class="admin-input">
+    </div>
+    <div class="admin-row">
+      <span>TON per Point:</span>
+      <input type="number" step="0.00001" id="cfgTonRate" class="admin-input">
+    </div>
+    <button class="btn" style="background: var(--warning); color: #000; padding: 10px; margin-top: 8px;" onclick="saveConfig()">Save Admin Settings</button>
   </div>
 
   <script>
+    const ADMIN_USER_ID = 9149192912;
     const tg = window.Telegram?.WebApp;
     if (tg) {
       tg.ready();
       tg.expand();
     }
 
-    // User Profile Display
-    const user = tg?.initDataUnsafe?.user;
-    if (user) {
-      document.getElementById("username").innerText = "👤 " + (user.first_name || "User");
-    } else {
-      document.getElementById("username").innerText = "👤 IceAds Player";
+    // Default Configuration
+    let config = {
+      adReward: 10,
+      dailyLimit: 100,
+      minTon: 0.01,
+      tonRate: 0.0001
+    };
+
+    // Load Saved Configurations
+    const savedCfg = localStorage.getItem("ice_config");
+    if (savedCfg) {
+      config = Object.assign(config, JSON.parse(savedCfg));
     }
 
-    // Points Storage
+    // Identify User
+    const user = tg?.initDataUnsafe?.user;
+    const currentUserId = user?.id || 0;
+    if (user) {
+      document.getElementById("username").innerText = "👤 " + (user.first_name || "User");
+    }
+
+    // Show Admin Panel If Bot Owner
+    if (currentUserId === ADMIN_USER_ID) {
+      document.getElementById("adminPanel").style.display = "block";
+      document.getElementById("cfgAdReward").value = config.adReward;
+      document.getElementById("cfgDailyLimit").value = config.dailyLimit;
+      document.getElementById("cfgMinTon").value = config.minTon;
+      document.getElementById("cfgTonRate").value = config.tonRate;
+    }
+
+    function saveConfig() {
+      config.adReward = parseInt(document.getElementById("cfgAdReward").value) || 10;
+      config.dailyLimit = parseInt(document.getElementById("cfgDailyLimit").value) || 100;
+      config.minTon = parseFloat(document.getElementById("cfgMinTon").value) || 0.01;
+      config.tonRate = parseFloat(document.getElementById("cfgTonRate").value) || 0.0001;
+      localStorage.setItem("ice_config", JSON.stringify(config));
+      alert("Admin Settings သိမ်းဆည်းပြီးပါပြီ!");
+      updateUI();
+    }
+
+    // Tasks List
+    let tasks = [
+      { id: 1, title: "Join Telegram Channel", reward: 50, link: "https://t.me/Iceads_bot" },
+      { id: 2, title: "Subscribe Updates", reward: 30, link: "https://t.me/telegram" }
+    ];
+    let completedTasks = JSON.parse(localStorage.getItem("ice_completed_tasks") || "[]");
+
+    // Balance & Daily Tracker
     let points = parseInt(localStorage.getItem("ice_points") || "0");
+    const today = new Date().toISOString().split("T")[0];
+    let dailyData = JSON.parse(localStorage.getItem("ice_daily") || "{}");
+
+    if (dailyData.date !== today) {
+      dailyData = { date: today, count: 0 };
+      localStorage.setItem("ice_daily", JSON.stringify(dailyData));
+    }
+
     updateUI();
+    renderTasks();
 
     function updateUI() {
       document.getElementById("points").innerText = points;
-      const ton = (points * 0.0001).toFixed(4);
-      document.getElementById("tonEst").innerText = `≈ ${ton} TON`;
+      const tonVal = (points * config.tonRate).toFixed(4);
+      document.getElementById("tonEst").innerText = `≈ ${tonVal} TON`;
+      document.getElementById("adRewardText").innerText = `+${config.adReward}`;
+      document.getElementById("dailyLimitText").innerText = `Daily Ads: ${dailyData.count} / ${config.dailyLimit}`;
+      document.getElementById("minWithdrawLabel").innerText = `Min: ${config.minTon} TON`;
       localStorage.setItem("ice_points", points);
+    }
+
+    function renderTasks() {
+      const container = document.getElementById("taskList");
+      container.innerHTML = "";
+      tasks.forEach(t => {
+        const isDone = completedTasks.includes(t.id);
+        const div = document.createElement("div");
+        div.className = "task-item";
+        div.innerHTML = `
+          <div class="task-info">
+            <div class="task-title">${t.title}</div>
+            <div class="task-reward">+${t.reward} Points</div>
+          </div>
+          <button class="btn-task ${isDone ? 'done' : ''}" onclick="doTask(${t.id}, '${t.link}', ${t.reward})">
+            ${isDone ? 'Claimed' : 'Start'}
+          </button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function doTask(id, link, reward) {
+      if (completedTasks.includes(id)) return;
+      if (tg) {
+        tg.openLink(link);
+      } else {
+        window.open(link, "_blank");
+      }
+      setTimeout(() => {
+        completedTasks.push(id);
+        localStorage.setItem("ice_completed_tasks", JSON.stringify(completedTasks));
+        points += reward;
+        updateUI();
+        renderTasks();
+        tg?.showAlert ? tg.showAlert(`🎉 Task အောင်မြင်ပါသည်! +${reward} Points ရရှိပါသည်!`) : alert(`🎉 Task အောင်မြင်ပါသည်! +${reward} Points ရရှိပါသည်!`);
+      }, 3000);
     }
 
     function showStatus(text, color) {
@@ -213,53 +377,50 @@
     }
 
     async function watchAd() {
+      if (dailyData.count >= config.dailyLimit) {
+        const limitMsg = `ဒီနေ့အတွက် ကြော်ငြာကြည့်ရှုနိုင်သည့် အကြိမ်ရေ (${config.dailyLimit}) ပြည့်သွားပါပြီ။ မနက်ဖြန်တွင် ပြန်လည်ကြည့်ရှုနိုင်ပါသည်။`;
+        tg?.showAlert ? tg.showAlert(limitMsg) : alert(limitMsg);
+        return;
+      }
+
       const btn = document.getElementById("adBtn");
       btn.disabled = true;
       btn.innerText = "⏳ Loading Ad...";
       showStatus("ကြော်ငြာ ခေါ်ယူနေပါသည်...", "#38bdf8");
 
       try {
-        if (!window.Adsgram) {
-          throw new Error("AdsGram SDK load မဖြစ်သေးပါ");
-        }
+        if (!window.Adsgram) throw new Error("AdsGram SDK load မဖြစ်သေးပါ");
 
-        // Newly Created Active Unit ID: 57762
-        const AdController = window.Adsgram.init({ blockId: "57762" });
-        
+        // Configured with New UnitID: 57766
+        const AdController = window.Adsgram.init({ blockId: "57766" });
         await AdController.show();
-        
-        // ကြော်ငြာ ကြည့်ရှုပြီးပါက Points ပေးခြင်း
-        points += 10;
-        updateUI();
-        tg?.HapticFeedback?.notificationOccurred('success');
-        showStatus("🎉 အောင်မြင်ပါသည်! +10 Points ရရှိပါပြီ။", "#10b981");
 
-        if (tg?.showAlert) {
-          tg.showAlert("🎉 +10 Points ရရှိပါသည်!");
-        } else {
-          alert("🎉 +10 Points ရရှိပါသည်!");
-        }
+        points += config.adReward;
+        dailyData.count += 1;
+        localStorage.setItem("ice_daily", JSON.stringify(dailyData));
+        updateUI();
+
+        tg?.HapticFeedback?.notificationOccurred('success');
+        showStatus("🎉 အောင်မြင်ပါသည်!", "#10b981");
+        tg?.showAlert ? tg.showAlert(`🎉 +${config.adReward} Points ရရှိပါသည်!`) : alert(`🎉 +${config.adReward} Points ရရှိပါသည်!`);
 
       } catch (err) {
         console.error("AdsGram Error:", err);
         const errMsg = err?.description || err?.message || "No Ad Available";
         showStatus("⚠️ " + errMsg, "#ef4444");
-        
-        if (tg?.showAlert) {
-          tg.showAlert("ကြော်ငြာ အခြေအနေ: " + errMsg);
-        } else {
-          alert("ကြော်ငြာ အခြေအနေ: " + errMsg);
-        }
+        tg?.showAlert ? tg.showAlert("ကြော်ငြာ အခြေအနေ: " + errMsg) : alert("ကြော်ငြာ အခြေအနေ: " + errMsg);
       } finally {
         btn.disabled = false;
-        btn.innerText = "🎬 Watch Ad (+10 Points)";
+        btn.innerText = `🎬 Watch Ad (+${config.adReward} Points)`;
       }
     }
 
     function requestWithdraw() {
       const address = document.getElementById("walletAddress").value.trim();
-      if (points < 100) {
-        const warning = "လက်ကျန် Points မလုံလောက်သေးပါ။ အနည်းဆုံး 100 Points ရှိရပါမည်။";
+      const currentTon = points * config.tonRate;
+
+      if (currentTon < config.minTon) {
+        const warning = `လက်ကျန်ငွေ မလုံလောက်သေးပါ။ အနည်းဆုံး ${config.minTon} TON ရှိမှ ငွေထုတ်ယူနိုင်ပါမည်။`;
         tg?.showAlert ? tg.showAlert(warning) : alert(warning);
         return;
       }
@@ -269,11 +430,13 @@
         return;
       }
 
-      const success = "✅ ငွေထုတ်ယူခွင့် တောင်းဆိုမှု ပေးပို့ပြီးပါပြီ။ Admin ဘက်မှ အတည်ပြုပေးပါလိမ့်မည်။";
-      tg?.showAlert ? tg.showAlert(success) : alert(success);
-      points -= 100;
+      const reqPoints = Math.ceil(config.minTon / config.tonRate);
+      points -= reqPoints;
       updateUI();
       document.getElementById("walletAddress").value = "";
+
+      const success = `✅ ${config.minTon} TON ထုတ်ယူခွင့် တောင်းဆိုမှု အောင်မြင်ပါသည်။ Admin ဘက်မှ အတည်ပြုပြီး လွှဲပြောင်းပေးပါမည်။`;
+      tg?.showAlert ? tg.showAlert(success) : alert(success);
     }
   </script>
 </body>
