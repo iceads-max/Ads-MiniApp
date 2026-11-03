@@ -8,13 +8,14 @@
   <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
   <style>
     :root {
-      --bg-color: #0f172a;
-      --card-bg: #1e293b;
+      --bg-color: #0b1329;
+      --card-bg: #152238;
       --primary: #38bdf8;
       --primary-hover: #0284c7;
       --text-main: #f8fafc;
       --text-sub: #94a3b8;
       --accent: #10b981;
+      --danger: #ef4444;
     }
     * {
       box-sizing: border-box;
@@ -29,17 +30,20 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 20px 16px;
+      padding: 24px 16px;
       min-height: 100vh;
     }
     .user-badge {
-      background: rgba(56, 189, 248, 0.1);
-      border: 1px solid rgba(56, 189, 248, 0.2);
-      padding: 6px 14px;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 8px 18px;
       border-radius: 20px;
       font-size: 14px;
       color: var(--primary);
-      margin-bottom: 20px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
     .card {
       background-color: var(--card-bg);
@@ -48,19 +52,20 @@
       width: 100%;
       max-width: 360px;
       text-align: center;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
       margin-bottom: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
     .balance-title {
       font-size: 13px;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.2px;
       color: var(--text-sub);
       margin-bottom: 8px;
+      font-weight: 600;
     }
     .points {
-      font-size: 42px;
+      font-size: 44px;
       font-weight: 800;
       color: var(--primary);
       margin-bottom: 4px;
@@ -69,10 +74,11 @@
       font-size: 14px;
       color: var(--accent);
       margin-bottom: 20px;
+      font-weight: 500;
     }
     .btn {
       width: 100%;
-      padding: 14px;
+      padding: 15px;
       border: none;
       border-radius: 14px;
       font-size: 16px;
@@ -82,16 +88,19 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      transition: opacity 0.2s;
+      transition: all 0.2s ease;
     }
     .btn:active {
-      opacity: 0.8;
-      transform: scale(0.98);
+      transform: scale(0.97);
     }
     .btn-ad {
       background: linear-gradient(135deg, #0284c7, #38bdf8);
       color: #fff;
-      box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+      box-shadow: 0 4px 18px rgba(56, 189, 248, 0.35);
+    }
+    .btn-ad:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
     }
     .withdraw-box {
       width: 100%;
@@ -99,10 +108,10 @@
       background: var(--card-bg);
       border-radius: 20px;
       padding: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
     .withdraw-title {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 600;
       margin-bottom: 12px;
       display: flex;
@@ -111,10 +120,10 @@
     }
     .input-group input {
       width: 100%;
-      padding: 12px 14px;
-      border-radius: 10px;
+      padding: 13px 14px;
+      border-radius: 12px;
       border: 1px solid #334155;
-      background-color: #0f172a;
+      background-color: #0b1329;
       color: #fff;
       font-size: 14px;
       margin-bottom: 12px;
@@ -126,6 +135,7 @@
     .btn-withdraw {
       background: #10b981;
       color: #fff;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25);
     }
     .note {
       font-size: 12px;
@@ -133,20 +143,27 @@
       margin-top: 10px;
       text-align: center;
     }
+    #statusMsg {
+      margin-top: 15px;
+      font-size: 13px;
+      text-align: center;
+      min-height: 18px;
+    }
   </style>
 </head>
 <body>
 
-  <div class="user-badge" id="username">👋 Loading...</div>
+  <div class="user-badge" id="username">👤 Loading User...</div>
 
   <div class="card">
-    <div class="balance-title">Your Balance</div>
+    <div class="balance-title">YOUR BALANCE</div>
     <div class="points" id="points">0</div>
-    <div class="ton-est" id="tonEst">≈ 0.000 TON</div>
+    <div class="ton-est" id="tonEst">≈ 0.0000 TON</div>
 
-    <button class="btn btn-ad" onclick="watchAd()">
+    <button class="btn btn-ad" id="adBtn" onclick="watchAd()">
       🎬 Watch Ad (+10 Points)
     </button>
+    <div id="statusMsg"></div>
   </div>
 
   <div class="withdraw-box">
@@ -155,7 +172,7 @@
       <span style="font-size: 12px; color: var(--text-sub);">Min: 100 Points</span>
     </div>
     <div class="input-group">
-      <input type="text" id="walletAddress" placeholder="Paste TON Wallet Address (EQ...)">
+      <input type="text" id="walletAddress" placeholder="Enter TON Wallet Address (EQ...)">
     </div>
     <button class="btn btn-withdraw" onclick="requestWithdraw()">
       💎 Request Payout
@@ -170,7 +187,7 @@
       tg.expand();
     }
 
-    // Load User
+    // User Display
     const user = tg?.initDataUnsafe?.user;
     if (user) {
       document.getElementById("username").innerText = "👤 " + (user.first_name || "User");
@@ -178,7 +195,7 @@
       document.getElementById("username").innerText = "👤 IceAds Player";
     }
 
-    // Points Storage
+    // Points Local Storage
     let points = parseInt(localStorage.getItem("ice_points") || "0");
     updateUI();
 
@@ -189,36 +206,72 @@
       localStorage.setItem("ice_points", points);
     }
 
-    // AdsGram Setup
-    const AdController = window.Adsgram ? window.Adsgram.init({ blockId: 57757 }) : null;
+    function showStatus(text, color) {
+      const msg = document.getElementById("statusMsg");
+      msg.innerText = text;
+      msg.style.color = color || "#94a3b8";
+    }
 
-    function watchAd() {
-      if (AdController) {
-        AdController.show().then((result) => {
-          points += 10;
-          updateUI();
-          tg?.HapticFeedback?.notificationOccurred('success');
-          alert("🎉 ကြော်ငြာကြည့်ရှုမှု အောင်မြင်ပါသည်။ +10 Points ရရှိပါပြီ!");
-        }).catch((err) => {
-          alert("⚠️ Ad Error: ကြော်ငြာမတက်သေးပါ။ AdsGram စနစ်တွင် Active ဖြစ်ရန် ခေတ္တစောင့်ပြီး ပြန်စမ်းပေးပါ။ (" + (err?.description || "No Ad Available") + ")");
-        });
-      } else {
-        alert("AdsGram SDK load မဖြစ်သေးပါ။ ခေတ္တစောင့်ပြီး ပြန်ဖွင့်ပေးပါ။");
+    async function watchAd() {
+      const btn = document.getElementById("adBtn");
+      btn.disabled = true;
+      btn.innerText = "⏳ Loading Ad...";
+      showStatus("ကြော်ငြာ ခေါ်ယူနေပါသည်...", "#38bdf8");
+
+      try {
+        if (!window.Adsgram) {
+          throw new Error("AdsGram SDK load မဖြစ်သေးပါ (Network စစ်ဆေးပါ)");
+        }
+
+        // AdsGram Initializer with Unit ID 57757
+        const AdController = window.Adsgram.init({ blockId: "57757" });
+        
+        const result = await AdController.show();
+        
+        // ကြော်ငြာကြည့်ရှုမှု အောင်မြင်သည့်အခါ
+        points += 10;
+        updateUI();
+        if (tg?.HapticFeedback) {
+          tg.HapticFeedback.notificationOccurred('success');
+        }
+        showStatus("🎉 အောင်မြင်ပါသည်! +10 Points ရရှိပါပြီ။", "#10b981");
+        if (tg?.showAlert) {
+          tg.showAlert("🎉 +10 Points ရရှိပါသည်!");
+        } else {
+          alert("🎉 +10 Points ရရှိပါသည်!");
+        }
+
+      } catch (err) {
+        console.error("AdsGram Error:", err);
+        const errMsg = err?.description || err?.message || JSON.stringify(err);
+        showStatus("⚠️ ကြော်ငြာမတက်ပါ: " + errMsg, "#ef4444");
+        
+        if (tg?.showAlert) {
+          tg.showAlert("ကြော်ငြာ မရရှိနိုင်သေးပါ: " + errMsg);
+        } else {
+          alert("ကြော်ငြာ မရရှိနိုင်သေးပါ: " + errMsg);
+        }
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "🎬 Watch Ad (+10 Points)";
       }
     }
 
     function requestWithdraw() {
       const address = document.getElementById("walletAddress").value.trim();
       if (points < 100) {
-        alert("လက်ကျန် Points မလုံလောက်သေးပါ။ အနည်းဆုံး 100 Points ရှိမှ ငွေထုတ်ယူနိုင်ပါမည်။");
+        const warning = "လက်ကျန် Points မလုံလောက်သေးပါ။ အနည်းဆုံး 100 Points ရှိရပါမည်။";
+        tg?.showAlert ? tg.showAlert(warning) : alert(warning);
         return;
       }
       if (!address || address.length < 15) {
-        alert("ကျေးဇူးပြု၍ မှန်ကန်သော TON Wallet Address ကို ထည့်သွင်းပေးပါ။");
+        const warning = "ကျေးဇူးပြု၍ မှန်ကန်သော TON Wallet Address ကို ရိုက်ထည့်ပါ။";
+        tg?.showAlert ? tg.showAlert(warning) : alert(warning);
         return;
       }
 
-      alert("✅ ငွေထုတ်ယူခွင့် တောင်းဆိုမှု လက်ခံရရှိပါသည်။ ကျေးဇူးပြု၍ Admin ဘက်မှ အတည်ပြုပေးသည်အထိ စောင့်ဆိုင်းပေးပါ။ (Address: " + address.substring(0, 8) + "...)");
+      const success = "✅ ငွေထုတ်ယူခွင့် တောင်းဆိုမှု ပေးပို့ပြီးပါပြီ။ Admin ဘက်မှ အတည်ပြုပေးပါလိမ့်မည်။";
+      tg?.showAlert ? tg.showAlert(success) : alert(success);
       points -= 100;
       updateUI();
       document.getElementById("walletAddress").value = "";
