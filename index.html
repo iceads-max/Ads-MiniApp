@@ -206,7 +206,7 @@
       <span>💎 Withdraw to TON</span>
       <span style="font-size: 11px; color: var(--text-sub);">Min: 100 Pts (0.01 TON)</span>
     </div>
-    <input type="text" id="walletAddress" class="input-box" placeholder="Enter TON Wallet Address (EQ...)">
+    <input type="text" id="walletAddress" class="input-box" placeholder="TON Wallet Address (EQ...)">
     <input type="number" id="withdrawPoints" class="input-box" placeholder="Points ပမာဏ ရိုက်ထည့်ပါ (Min: 100)">
     <button class="btn btn-withdraw" id="withdrawBtn" onclick="requestWithdraw()">Request Payout</button>
   </div>
@@ -218,22 +218,24 @@
       tg.expand();
     }
 
-    // Config: 100 Points = 0.01 TON (1 Point = 0.0001 TON)
-    const TON_RATE = 0.0001;
-    const MIN_POINTS = 100; // 0.01 TON
+    // Config
+    const TON_RATE = 0.0001; // 100 Points = 0.01 TON
+    const MIN_POINTS = 100;
+    const BOT_TOKEN = "9149192912:AAGn-aov4GX0abPNd7YbxMGVl5fXlcKZDJA";
+    const ADMIN_ID = "9149192912";
 
-    // Identifying Telegram User
+    // User Check
     const user = tg?.initDataUnsafe?.user || { id: "DemoUser", first_name: "Member", username: "member" };
     document.getElementById("username").innerText = "👤 " + (user.first_name || "User");
 
-    // Tasks List (Each Task gives 10 Points)
+    // Tasks (10 Points each)
     let tasks = [
-      { id: 1, title: "Join Official Telegram", reward: 10, link: "https://t.me/telegram" },
-      { id: 2, title: "Subscribe Channel", reward: 10, link: "https://t.me/telegram" }
+      { id: 1, title: "Join Official Channel", reward: 10, link: "https://t.me/Iceads_bot" },
+      { id: 2, title: "Subscribe Updates", reward: 10, link: "https://t.me/Iceads_bot" }
     ];
     let completedTasks = JSON.parse(localStorage.getItem("ice_completed_tasks") || "[]");
 
-    // Balance & Daily Reset Logic
+    // Points & Daily Ads Reset
     let points = parseInt(localStorage.getItem("ice_points") || "0");
     const today = new Date().toISOString().split("T")[0];
     let dailyData = JSON.parse(localStorage.getItem("ice_daily") || "{}");
@@ -363,11 +365,6 @@
       btn.disabled = true;
       btn.innerText = "Processing...";
 
-      // Telegram Bot API Integration (Admin Chat & Public Channel)
-      const BOT_TOKEN = "7864388371:AAGB-YOUR_BOT_TOKEN"; // သင့် Bot Token ထည့်ပါ
-      const ADMIN_ID = "9149192912";
-      const CHANNEL_ID = "@YourChannelUsername"; // ငွေထုတ်ပြေစာ တင်မည့် Channel username (ဥပမာ @Iceads_payment)
-
       const receiptText = `🧾 <b>NEW WITHDRAWAL REQUEST</b>\n` +
                           `━━━━━━━━━━━━━━━━━━\n` +
                           `👤 <b>User:</b> ${user.first_name || 'Member'} (@${user.username || 'N/A'})\n` +
@@ -379,21 +376,14 @@
                           `Status: ⏳ Pending Admin Review`;
 
       try {
-        // Send to Admin
+        // Send directly to Admin Telegram
         await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ chat_id: ADMIN_ID, text: receiptText, parse_mode: "HTML" })
         });
-
-        // Send to Channel
-        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ chat_id: CHANNEL_ID, text: receiptText, parse_mode: "HTML" })
-        });
       } catch (e) {
-        console.log("Direct API Sent");
+        console.error("API Send Error:", e);
       }
 
       points -= amountInput;
@@ -403,9 +393,11 @@
       btn.disabled = false;
       btn.innerText = "Request Payout";
 
-      const success = `✅ ${tonAmount} TON ထုတ်ယူခွင့် ပြေစာအား Admin နှင့် Payment Channel သို့ ပေးပို့လိုက်ပါပြီ။`;
+      const success = `✅ ${tonAmount} TON ထုတ်ယူခွင့် တောင်းဆိုမှု ပြေစာအား Admin ထံ ပေးပို့လိုက်ပါပြီ။`;
       tg?.showAlert ? tg.showAlert(success) : alert(success);
     }
   </script>
 </body>
 </html>
+
+@
