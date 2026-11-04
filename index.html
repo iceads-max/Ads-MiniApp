@@ -80,8 +80,8 @@
     const tg = window.Telegram?.WebApp;
     if (tg) { tg.ready(); tg.expand(); }
 
-    // Direct VPS API URL
     const RAW_SERVER = "http://132.243.30.37:5055";
+    const ADMIN_USER_ID = "6093710107";
 
     let TON_RATE = 0.0001;
     let MIN_POINTS = 100;
@@ -89,7 +89,6 @@
     let AD_REWARD = 10;
     let REF_REWARD = 20;
 
-    // Telegram User ID စစ်ဆေးခြင်း
     const user = tg?.initDataUnsafe?.user || { id: 6093710107, first_name: "Member", username: "None" };
     document.getElementById("username").innerText = "👤 " + (user.first_name || "User");
 
@@ -101,15 +100,13 @@
       localStorage.setItem("ice_daily", JSON.stringify(dailyData));
     }
 
-    // Server Call Function with HTTPS-to-HTTP Relay Support
     async function apiFetch(endpoint, options = {}) {
-      const targetUrl = RAW_SERVER + endpoint;
-      // 1. Direct fetch try
+      const sep = endpoint.includes('?') ? '&' : '?';
+      const targetUrl = RAW_SERVER + endpoint + `${sep}user_id=${user.id}`;
       try {
         const res = await fetch(targetUrl, options);
         return res;
       } catch (err) {
-        // 2. Fallback to HTTPS corsproxy if Mixed Content is blocked
         const proxyUrl = "https://corsproxy.io/?" + encodeURIComponent(targetUrl);
         return await fetch(proxyUrl, options);
       }
@@ -117,8 +114,9 @@
 
     async function loadData() {
       try {
-        const res = await apiFetch(`/api/init_user?user_id=${user.id}`);
-        if (res.status === 403) {
+        const res = await apiFetch(`/api/init_user`);
+        // Admin ဖြစ်ပါက Ban Screen မပြစေဘဲ အမြဲ ခွင့်ပြုမည်
+        if (res.status === 403 && String(user.id) !== ADMIN_USER_ID) {
           document.getElementById("mainApp").style.display = "none";
           document.getElementById("bannedScreen").style.display = "block";
           return;
@@ -138,7 +136,7 @@
           updateUI();
         }
       } catch (err) {
-        console.log("Sync error:", err);
+        console.log("Sync status:", err);
       }
     }
 
