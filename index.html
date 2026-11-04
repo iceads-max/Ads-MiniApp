@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,14 +80,17 @@
     const tg = window.Telegram?.WebApp;
     if (tg) { tg.ready(); tg.expand(); }
 
-    const SERVER_URL = "http://132.243.30.37:5055";
+    // Direct VPS API URL
+    const RAW_SERVER = "http://132.243.30.37:5055";
+
     let TON_RATE = 0.0001;
     let MIN_POINTS = 100;
     let DAILY_LIMIT = 100;
     let AD_REWARD = 10;
     let REF_REWARD = 20;
 
-    const user = tg?.initDataUnsafe?.user || { id: "6093710107", first_name: "Member", username: "None" };
+    // Telegram User ID စစ်ဆေးခြင်း
+    const user = tg?.initDataUnsafe?.user || { id: 6093710107, first_name: "Member", username: "None" };
     document.getElementById("username").innerText = "👤 " + (user.first_name || "User");
 
     let points = 0;
@@ -99,10 +101,23 @@
       localStorage.setItem("ice_daily", JSON.stringify(dailyData));
     }
 
-    // VPS ဆီမှ Settings အားလုံးကို Real-time တိုက်ရိုက်ဆွဲယူခြင်း
+    // Server Call Function with HTTPS-to-HTTP Relay Support
+    async function apiFetch(endpoint, options = {}) {
+      const targetUrl = RAW_SERVER + endpoint;
+      // 1. Direct fetch try
+      try {
+        const res = await fetch(targetUrl, options);
+        return res;
+      } catch (err) {
+        // 2. Fallback to HTTPS corsproxy if Mixed Content is blocked
+        const proxyUrl = "https://corsproxy.io/?" + encodeURIComponent(targetUrl);
+        return await fetch(proxyUrl, options);
+      }
+    }
+
     async function loadData() {
       try {
-        const res = await fetch(`${SERVER_URL}/api/init_user?user_id=${user.id}`);
+        const res = await apiFetch(`/api/init_user?user_id=${user.id}`);
         if (res.status === 403) {
           document.getElementById("mainApp").style.display = "none";
           document.getElementById("bannedScreen").style.display = "block";
@@ -123,7 +138,7 @@
           updateUI();
         }
       } catch (err) {
-        console.log("Server sync fallback:", err);
+        console.log("Sync error:", err);
       }
     }
 
@@ -157,7 +172,7 @@
         const AdController = window.Adsgram.init({ blockId: "57762" });
         await AdController.show();
 
-        const res = await fetch(`${SERVER_URL}/api/add_ad_points`, {
+        const res = await apiFetch(`/api/add_ad_points`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ user_id: user.id })
@@ -199,7 +214,7 @@
       btn.disabled = true;
 
       try {
-        const res = await fetch(`${SERVER_URL}/api/withdraw`, {
+        const res = await apiFetch(`/api/withdraw`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
