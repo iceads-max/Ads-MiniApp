@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,342 +18,161 @@
       --danger: #ef4444;
       --warning: #f59e0b;
     }
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      user-select: none;
-    }
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-main);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px 16px 40px;
-      min-height: 100vh;
-    }
-    .user-badge {
-      background: rgba(56, 189, 248, 0.12);
-      border: 1px solid rgba(56, 189, 248, 0.25);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 13px;
-      color: var(--primary);
-      margin-bottom: 16px;
-    }
-    .card {
-      background-color: var(--card-bg);
-      border-radius: 20px;
-      padding: 20px;
-      width: 100%;
-      max-width: 360px;
-      text-align: center;
-      margin-bottom: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-    }
-    .balance-title {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--text-sub);
-      margin-bottom: 4px;
-    }
-    .points {
-      font-size: 40px;
-      font-weight: 800;
-      color: var(--primary);
-      margin-bottom: 2px;
-    }
-    .ton-est {
-      font-size: 14px;
-      color: var(--accent);
-      margin-bottom: 14px;
-    }
-    .daily-counter {
-      font-size: 12px;
-      color: var(--warning);
-      margin-bottom: 14px;
-      font-weight: 600;
-    }
-    .btn {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 12px;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-    .btn:active {
-      transform: scale(0.98);
-    }
-    .btn-ad {
-      background: linear-gradient(135deg, #0284c7, #38bdf8);
-      color: #fff;
-    }
-    .btn-ad:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-    .section-title {
-      font-size: 15px;
-      font-weight: 700;
-      margin-bottom: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .box {
-      width: 100%;
-      max-width: 360px;
-      background: var(--card-bg);
-      border-radius: 18px;
-      padding: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      margin-bottom: 16px;
-    }
-    .task-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(11, 19, 41, 0.6);
-      padding: 12px;
-      border-radius: 12px;
-      margin-bottom: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    .task-info {
-      text-align: left;
-    }
-    .task-title {
-      font-size: 14px;
-      font-weight: 600;
-    }
-    .task-reward {
-      font-size: 12px;
-      color: var(--accent);
-    }
-    .btn-task {
-      padding: 8px 14px;
-      font-size: 13px;
-      background: #334155;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    .btn-task.done {
-      background: rgba(16, 185, 129, 0.2);
-      color: var(--accent);
-      cursor: default;
-    }
-    .btn-invite {
-      background: rgba(56, 189, 248, 0.15);
-      border: 1px solid var(--primary);
-      color: var(--primary);
-      font-size: 14px;
-      padding: 12px;
-      margin-top: 10px;
-    }
-    .input-box {
-      width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      border: 1px solid #334155;
-      background-color: #0b1329;
-      color: #fff;
-      font-size: 13px;
-      margin-bottom: 10px;
-      outline: none;
-    }
-    .btn-withdraw {
-      background: #10b981;
-      color: #fff;
-    }
-    #statusMsg {
-      margin-top: 10px;
-      font-size: 12px;
-      text-align: center;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; user-select: none; }
+    body { background-color: var(--bg-color); color: var(--text-main); display: flex; flex-direction: column; align-items: center; padding: 20px 16px 40px; min-height: 100vh; }
+    .user-badge { background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.25); padding: 6px 14px; border-radius: 20px; font-size: 13px; color: var(--primary); margin-bottom: 16px; }
+    .card { background-color: var(--card-bg); border-radius: 20px; padding: 20px; width: 100%; max-width: 360px; text-align: center; margin-bottom: 16px; border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+    .points { font-size: 40px; font-weight: 800; color: var(--primary); margin-bottom: 2px; }
+    .ton-est { font-size: 14px; color: var(--accent); margin-bottom: 14px; }
+    .daily-counter { font-size: 12px; color: var(--warning); margin-bottom: 14px; font-weight: 600; }
+    .btn { width: 100%; padding: 14px; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn:active { transform: scale(0.98); }
+    .btn-ad { background: linear-gradient(135deg, #0284c7, #38bdf8); color: #fff; }
+    .btn-ad:disabled { opacity: 0.5; }
+    .box { width: 100%; max-width: 360px; background: var(--card-bg); border-radius: 18px; padding: 16px; border: 1px solid rgba(255, 255, 255, 0.08); margin-bottom: 16px; }
+    .btn-invite { background: rgba(56, 189, 248, 0.15); border: 1px solid var(--primary); color: var(--primary); font-size: 14px; padding: 12px; margin-top: 10px; }
+    .input-box { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #334155; background-color: #0b1329; color: #fff; font-size: 13px; margin-bottom: 10px; outline: none; }
+    .btn-withdraw { background: #10b981; color: #fff; }
+    #bannedScreen { display: none; text-align: center; padding: 40px 20px; }
   </style>
 </head>
 <body>
 
-  <div class="user-badge" id="username">👤 Loading...</div>
-
-  <!-- Balance Card -->
-  <div class="card">
-    <div class="balance-title">YOUR BALANCE</div>
-    <div class="points" id="points">0</div>
-    <div class="ton-est" id="tonEst">≈ 0.0000 TON</div>
-    <div class="daily-counter" id="dailyLimitText">Daily Ads: 0 / 100</div>
-
-    <button class="btn btn-ad" id="adBtn" onclick="watchAd()">
-      🎬 Watch Ad (+10 Points)
-    </button>
-    <div id="statusMsg"></div>
+  <div id="bannedScreen">
+    <h2 style="color: var(--danger); margin-bottom: 12px;">🚫 Access Denied</h2>
+    <p style="color: var(--text-sub); font-size: 14px;">Your IP has been banned due to suspicious activity.</p>
   </div>
 
-  <!-- Referral Section -->
-  <div class="box">
-    <div class="section-title">
-      <span>👥 Referral Program</span>
-      <span style="font-size: 11px; color: var(--accent);">+20 Pts / Friend</span>
-    </div>
-    <p style="font-size: 12px; color: var(--text-sub); line-height: 1.5;">သူငယ်ချင်းများကို ဖိတ်ခေါ်ပြီး Points များ ရယူပါ။</p>
-    <button class="btn btn-invite" onclick="shareInviteLink()">🔗 Invite Friends</button>
-  </div>
+  <div id="mainApp" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+    <div class="user-badge" id="username">👤 Loading...</div>
 
-  <!-- Tasks Section -->
-  <div class="box">
-    <div class="section-title">
-      <span>📌 Available Tasks</span>
-    </div>
-    <div id="taskList"></div>
-  </div>
+    <!-- Balance Card -->
+    <div class="card">
+      <div style="font-size: 12px; color: var(--text-sub); margin-bottom: 4px;">YOUR BALANCE</div>
+      <div class="points" id="points">0</div>
+      <div class="ton-est" id="tonEst">≈ 0.0000 TON</div>
+      <div class="daily-counter" id="dailyLimitText">Daily Ads: 0 / 100</div>
 
-  <!-- Withdrawal Section -->
-  <div class="box">
-    <div class="section-title">
-      <span>💎 Withdraw to TON</span>
-      <span style="font-size: 11px; color: var(--text-sub);">Min: 100 Pts (0.01 TON)</span>
+      <button class="btn btn-ad" id="adBtn" onclick="watchAd()">🎬 Watch Ad (+10 Points)</button>
     </div>
-    <input type="text" id="walletAddress" class="input-box" placeholder="TON Wallet Address (EQ...)">
-    <input type="number" id="withdrawPoints" class="input-box" placeholder="ထုတ်ယူမည့် Points အရေအတွက် (Min: 100)">
-    <button class="btn btn-withdraw" id="withdrawBtn" onclick="requestWithdraw()">Request Payout</button>
+
+    <!-- Referral Section -->
+    <div class="box">
+      <div style="font-size: 15px; font-weight: 700; margin-bottom: 8px;">
+        👥 Referral Program (<span id="refRewText">+20 Pts</span>)
+      </div>
+      <p style="font-size: 12px; color: var(--text-sub);">မိတ်ဆွေများကို ဖိတ်ခေါ်ပြီး Points များ ရယူပါ။</p>
+      <button class="btn btn-invite" onclick="shareInviteLink()">🔗 Invite Friends</button>
+    </div>
+
+    <!-- Withdrawal Section -->
+    <div class="box">
+      <div style="font-size: 15px; font-weight: 700; margin-bottom: 12px; display: flex; justify-content: space-between;">
+        <span>💎 Withdraw to TON</span>
+        <span id="minText" style="font-size: 11px; color: var(--text-sub);">Min: 100 Pts</span>
+      </div>
+      <input type="text" id="walletAddress" class="input-box" placeholder="TON Wallet Address (EQ...)">
+      <input type="number" id="withdrawPoints" class="input-box" placeholder="Points အရေအတွက်">
+      <button class="btn btn-withdraw" id="withdrawBtn" onclick="requestWithdraw()">Request Payout</button>
+    </div>
   </div>
 
   <script>
     const tg = window.Telegram?.WebApp;
-    if (tg) {
-      tg.ready();
-      tg.expand();
-    }
+    if (tg) { tg.ready(); tg.expand(); }
 
-    const TON_RATE = 0.0001;
-    const MIN_POINTS = 100;
-    const BOT_TOKEN = "9149192912:AAGn-aov4GX0abPNd7YbxMGVl5fXlcKZDJA";
-    const ADMIN_ID = "6093710107";
+    const SERVER_URL = "http://132.243.30.37:5055";
+    let TON_RATE = 0.0001;
+    let MIN_POINTS = 100;
+    let DAILY_LIMIT = 100;
+    let AD_REWARD = 10;
+    let REF_REWARD = 20;
 
-    const user = tg?.initDataUnsafe?.user || { id: "DemoUser", first_name: "Member", username: "None" };
+    const user = tg?.initDataUnsafe?.user || { id: "6093710107", first_name: "Member", username: "None" };
     document.getElementById("username").innerText = "👤 " + (user.first_name || "User");
 
-    let tasks = [
-      { id: 1, title: "Join Official Telegram", reward: 10, link: "https://t.me/Iceads_bot" },
-      { id: 2, title: "Subscribe Updates", reward: 10, link: "https://t.me/Iceads_bot" }
-    ];
-    let completedTasks = JSON.parse(localStorage.getItem("ice_completed_tasks") || "[]");
-
-    let points = parseInt(localStorage.getItem("ice_points") || "0");
+    let points = 0;
     const today = new Date().toISOString().split("T")[0];
     let dailyData = JSON.parse(localStorage.getItem("ice_daily") || "{}");
-
     if (dailyData.date !== today) {
       dailyData = { date: today, count: 0 };
       localStorage.setItem("ice_daily", JSON.stringify(dailyData));
     }
 
-    updateUI();
-    renderTasks();
+    // VPS ဆီမှ Settings အားလုံးကို Real-time တိုက်ရိုက်ဆွဲယူခြင်း
+    async function loadData() {
+      try {
+        const res = await fetch(`${SERVER_URL}/api/init_user?user_id=${user.id}`);
+        if (res.status === 403) {
+          document.getElementById("mainApp").style.display = "none";
+          document.getElementById("bannedScreen").style.display = "block";
+          return;
+        }
+        const data = await res.json();
+        if (data.status === "success") {
+          points = data.points;
+          MIN_POINTS = data.min_withdraw;
+          TON_RATE = data.ton_rate;
+          DAILY_LIMIT = data.daily_limit;
+          AD_REWARD = data.ad_reward;
+          REF_REWARD = data.ref_reward;
+
+          document.getElementById("minText").innerText = `Min: ${MIN_POINTS} Pts`;
+          document.getElementById("adBtn").innerText = `🎬 Watch Ad (+${AD_REWARD} Points)`;
+          document.getElementById("refRewText").innerText = `+${REF_REWARD} Pts`;
+          updateUI();
+        }
+      } catch (err) {
+        console.log("Server sync fallback:", err);
+      }
+    }
 
     function updateUI() {
       document.getElementById("points").innerText = points;
-      const tonVal = (points * TON_RATE).toFixed(4);
-      document.getElementById("tonEst").innerText = `≈ ${tonVal} TON`;
-      document.getElementById("dailyLimitText").innerText = `Daily Ads: ${dailyData.count} / 100`;
-      localStorage.setItem("ice_points", points);
+      document.getElementById("tonEst").innerText = `≈ ${(points * TON_RATE).toFixed(4)} TON`;
+      document.getElementById("dailyLimitText").innerText = `Daily Ads: ${dailyData.count} / ${DAILY_LIMIT}`;
     }
 
-    function renderTasks() {
-      const container = document.getElementById("taskList");
-      container.innerHTML = "";
-      tasks.forEach(t => {
-        const isDone = completedTasks.includes(t.id);
-        const div = document.createElement("div");
-        div.className = "task-item";
-        div.innerHTML = `
-          <div class="task-info">
-            <div class="task-title">${t.title}</div>
-            <div class="task-reward">+${t.reward} Points</div>
-          </div>
-          <button class="btn-task ${isDone ? 'done' : ''}" onclick="doTask(${t.id}, '${t.link}', ${t.reward})">
-            ${isDone ? 'Claimed' : 'Start'}
-          </button>
-        `;
-        container.appendChild(div);
-      });
-    }
-
-    function doTask(id, link, reward) {
-      if (completedTasks.includes(id)) return;
-      if (tg) tg.openLink(link);
-      else window.open(link, "_blank");
-
-      setTimeout(() => {
-        completedTasks.push(id);
-        localStorage.setItem("ice_completed_tasks", JSON.stringify(completedTasks));
-        points += reward;
-        updateUI();
-        renderTasks();
-        tg?.showAlert ? tg.showAlert(`🎉 +${reward} Points ရရှိပါသည်!`) : alert(`🎉 +${reward} Points ရရှိပါသည်!`);
-      }, 3000);
-    }
+    loadData();
 
     function shareInviteLink() {
       const inviteUrl = `https://t.me/Iceads_bot?start=ref_${user.id}`;
-      const text = encodeURIComponent("🎬 Ads ကြည့်ပြီး TON ရှာကြမယ်! အခုပဲ စတင်လိုက်ပါ:");
+      const text = encodeURIComponent("🎬 Ads ကြည့်ပြီး TON ရှာကြမယ်!");
       const shareUrl = `https://t.me/share/url?url=${inviteUrl}&text=${text}`;
       if (tg) tg.openTelegramLink(shareUrl);
       else window.open(shareUrl, "_blank");
     }
 
-    function showStatus(text, color) {
-      const msg = document.getElementById("statusMsg");
-      msg.innerText = text;
-      msg.style.color = color || "#94a3b8";
-    }
-
     async function watchAd() {
-      if (dailyData.count >= 100) {
-        const limitMsg = "ဒီနေ့အတွက် ကြော်ငြာကြည့်ရှုခွင့် အကြိမ် ၁၀၀ ပြည့်သွားပါပြီ။ မနက်ဖြန်တွင် ပြန်လည်ကြည့်ရှုပါ။";
-        tg?.showAlert ? tg.showAlert(limitMsg) : alert(limitMsg);
+      if (dailyData.count >= DAILY_LIMIT) {
+        tg?.showAlert ? tg.showAlert(`ဒီနေ့အတွက် အကြိမ် ${DAILY_LIMIT} ပြည့်သွားပါပြီ။`) : alert("Limit reached");
         return;
       }
 
       const btn = document.getElementById("adBtn");
       btn.disabled = true;
-      btn.innerText = "⏳ Loading Ad...";
-      showStatus("ကြော်ငြာ ခေါ်ယူနေပါသည်...", "#38bdf8");
 
       try {
-        if (!window.Adsgram) throw new Error("AdsGram SDK load မဖြစ်သေးပါ");
-
+        if (!window.Adsgram) throw new Error("Ads SDK Not Loaded");
         const AdController = window.Adsgram.init({ blockId: "57762" });
         await AdController.show();
 
-        points += 10;
+        const res = await fetch(`${SERVER_URL}/api/add_ad_points`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ user_id: user.id })
+        });
+        const resData = await res.json();
+        points = resData.new_points || (points + AD_REWARD);
         dailyData.count += 1;
         localStorage.setItem("ice_daily", JSON.stringify(dailyData));
         updateUI();
 
-        tg?.HapticFeedback?.notificationOccurred('success');
-        showStatus("🎉 အောင်မြင်ပါသည်!", "#10b981");
-        tg?.showAlert ? tg.showAlert("🎉 +10 Points ရရှိပါသည်!") : alert("🎉 +10 Points ရရှိပါသည်!");
-
+        tg?.showAlert ? tg.showAlert(`🎉 +${AD_REWARD} Points ရရှိပါသည်!`) : alert(`🎉 +${AD_REWARD} Points ရရှိပါသည်!`);
       } catch (err) {
-        const errMsg = err?.description || err?.message || "No Ad Available";
-        showStatus("⚠️ " + errMsg, "#ef4444");
-        tg?.showAlert ? tg.showAlert("ကြော်ငြာ အခြေအနေ: " + errMsg) : alert("ကြော်ငြာ အခြေအနေ: " + errMsg);
+        alert("Ad status: " + (err.message || "Unavailable"));
       } finally {
         btn.disabled = false;
-        btn.innerText = "🎬 Watch Ad (+10 Points)";
       }
     }
 
@@ -361,64 +181,52 @@
       const amountInput = parseInt(document.getElementById("withdrawPoints").value);
 
       if (!address || address.length < 20) {
-        const warning = "ကျေးဇူးပြု၍ မှန်ကန်သော TON Wallet Address အပြည့်အစုံ ရိုက်ထည့်ပါ။";
-        tg?.showAlert ? tg.showAlert(warning) : alert(warning);
+        alert("ကျေးဇူးပြု၍ TON Address အပြည့်အစုံ ရိုက်ထည့်ပါ။");
         return;
       }
 
       if (isNaN(amountInput) || amountInput < MIN_POINTS) {
-        const warning = `အနည်းဆုံး ${MIN_POINTS} Points (0.01 TON) စတင် ထုတ်ယူရပါမည်။`;
-        tg?.showAlert ? tg.showAlert(warning) : alert(warning);
+        alert(`အနည်းဆုံး ${MIN_POINTS} Points စတင် ထုတ်ယူရပါမည်။`);
         return;
       }
 
       if (amountInput > points) {
-        const warning = `လက်ကျန် Points မလုံလောက်ပါ။ (လက်ကျန်: ${points} Pts)`;
-        tg?.showAlert ? tg.showAlert(warning) : alert(warning);
+        alert("လက်ကျန် Points မလုံလောက်ပါ။");
         return;
       }
 
-      const tonAmount = (amountInput * TON_RATE).toFixed(4);
       const btn = document.getElementById("withdrawBtn");
       btn.disabled = true;
-      btn.innerText = "Processing...";
-
-      const receiptText = `🚨 <b>NEW WITHDRAWAL REQUEST</b>\n` +
-                          `━━━━━━━━━━━━━━━━━━\n` +
-                          `👤 <b>User:</b> ${user.first_name || 'Member'} (@${user.username || 'None'})\n` +
-                          `🆔 <b>User ID:</b> <code>${user.id}</code>\n` +
-                          `💰 <b>Points:</b> ${amountInput} Pts\n` +
-                          `💎 <b>TON Amount:</b> <code>${tonAmount}</code> TON\n` +
-                          `🏦 <b>Wallet Address:</b>\n<code>${address}</code>\n` +
-                          `📅 <b>Date:</b> ${new Date().toLocaleString()}\n` +
-                          `━━━━━━━━━━━━━━━━━━\n` +
-                          `👉 <i>လိပ်စာ သို့မဟုတ် TON ပမာဏကို ထိလိုက်ရုံဖြင့် Auto-Copy ဖြစ်ပါသည်</i>`;
 
       try {
-        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        const res = await fetch(`${SERVER_URL}/api/withdraw`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            chat_id: ADMIN_ID,
-            text: receiptText,
-            parse_mode: "HTML"
+            user_id: user.id,
+            name: user.first_name,
+            username: user.username,
+            points: amountInput,
+            address: address
           })
         });
-      } catch (err) {
-        console.error("Send Error:", err);
+
+        const data = await res.json();
+        if (data.status === "success") {
+          points = data.new_points;
+          updateUI();
+          document.getElementById("walletAddress").value = "";
+          document.getElementById("withdrawPoints").value = "";
+          alert("✅ ငွေထုတ်ယူခွင့် တောင်းဆိုမှု ပြေစာ ပေးပို့ပြီးပါပြီ။");
+        } else {
+          alert("Error: " + data.message);
+        }
+      } catch (e) {
+        alert("ဆာဗာ ချိတ်ဆက်မရပါ: " + e.message);
+      } finally {
+        btn.disabled = false;
       }
-
-      points -= amountInput;
-      updateUI();
-      document.getElementById("walletAddress").value = "";
-      document.getElementById("withdrawPoints").value = "";
-      btn.disabled = false;
-      btn.innerText = "Request Payout";
-
-      const success = `✅ ${tonAmount} TON ထုတ်ယူခွင့် တောင်းဆိုမှု ပြေစာအား Admin ထံ ပို့ပေးလိုက်ပါပြီ။`;
-      tg?.showAlert ? tg.showAlert(success) : alert(success);
     }
   </script>
 </body>
 </html>
-
